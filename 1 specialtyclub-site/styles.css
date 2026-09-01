@@ -173,3 +173,83 @@
   .ownbrands .ob-imgs{display:flex;gap:16px;flex:0 0 auto}
   .ownbrands .ob-imgs img{height:200px;width:auto}
   @media(max-width:640px){.ownbrands .ob-imgs img{height:150px}}
+
+/* ============================================================
+   CINEMATIC SCROLL STORY
+   02 Hero/scenes · 04 Can visual · 05 Capabilities transition
+   09 Responsive · 10 Reduced motion
+   ============================================================ */
+
+/* -- 01 NAVIGATION refinement: transparent over hero, blur after scroll */
+nav{transition:background .35s ease, backdrop-filter .35s ease}
+nav.nav-scrolled{background:rgba(16,9,4,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+
+/* -- 02/03 story shell: tall scroll container + pinned viewport */
+.story{position:relative;height:420vh}
+.story-pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.story-bg{position:absolute;inset:0;background:
+  radial-gradient(56% 46% at 63% 44%, rgba(220,80,0,.16), transparent 62%),
+  radial-gradient(85% 75% at 50% 50%, #191009 0%, var(--walnut) 72%)}
+
+/* -- 04 the can: transform-only motion, integrated lighting */
+.can-stage{position:absolute;inset:0;pointer-events:none;will-change:opacity}
+.can-box{position:absolute;left:50%;top:50%;width:clamp(150px,15vw,224px);
+  transform:translate(-50%,-50%)}
+#storyCan{display:block;width:100%;height:auto}
+.can-shadow{position:absolute;left:50%;bottom:-30px;width:130%;height:44px;transform:translateX(-50%);
+  background:radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,.55), transparent 70%)}
+
+/* -- 03 scenes: absolute layers, driven by scroll progress (no timed fade-ins) */
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+  padding:0 var(--gutter);opacity:0;pointer-events:none;will-change:transform,opacity}
+.scene-inner{max-width:min(46vw,660px)}
+.scene-3 .scene-inner{margin-left:auto;text-align:right}
+.scene-4{align-items:center;text-align:center}
+.scene-4 .scene-inner{max-width:min(72vw,820px)}
+.scene-display{text-transform:uppercase;font-weight:500;line-height:.9;letter-spacing:-.01em;
+  font-size:clamp(2.9rem,7vw,7.4rem)}
+.sd-md{font-size:clamp(2.2rem,5.4vw,5.2rem)}
+.scene-sub{margin-top:24px;font-size:clamp(17px,1.9vw,24px);line-height:1.32;color:var(--cream);max-width:44ch}
+.scene-3 .scene-sub{margin-left:auto}
+.scene-4 .scene-sub{margin-left:auto;margin-right:auto}
+.scene .eyebrow{margin-bottom:22px}
+.scene .hero-actions{margin-top:38px;display:flex;gap:16px;flex-wrap:wrap}
+.caps-row{margin-top:26px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:500;color:var(--driftwood);line-height:1.9}
+
+/* -- 05 transition into existing content: platforms section breathes */
+.platforms{padding-top:clamp(90px,14vh,150px)}
+
+/* -- 09 RESPONSIVE: intentional mobile behavior, not shrunk desktop */
+@media(max-width:1024px){
+  .scene-inner{max-width:min(56vw,560px)}
+}
+@media(max-width:760px){
+  .story{height:340vh}
+  .can-box{top:34%;width:clamp(120px,34vw,170px)}
+  .scene{justify-content:flex-end;padding-bottom:6vh}
+  .scene-inner,.scene-3 .scene-inner,.scene-4 .scene-inner{max-width:100%;margin:0;text-align:left}
+  .scene-3 .scene-sub,.scene-4 .scene-sub{margin-left:0;margin-right:0}
+  .scene-4{align-items:flex-start;text-align:left}
+  .scene-display{font-size:clamp(2.3rem,10vw,3.6rem)}
+  .sd-md{font-size:clamp(1.9rem,8.4vw,3rem)}
+  .scene-sub{font-size:15px;max-width:40ch;margin-top:14px}
+  .scene .hero-actions{margin-top:22px}
+  .scene .eyebrow{margin-bottom:12px}
+  .scene .hero-actions .btn-fill,.scene .hero-actions .btn-ghost{padding:13px 22px;font-size:12px}
+}
+
+/* -- 10 REDUCED MOTION: static, complete, fully navigable */
+@media(prefers-reduced-motion:reduce){
+  .story{height:auto}
+  .story-pin{position:relative;height:auto;overflow:visible;padding:110px 0 40px}
+  .can-stage{position:relative;inset:auto;height:auto;padding:0}
+  .can-box{position:relative;left:auto;top:auto;transform:none;margin:30px auto}
+  .scene{position:relative;inset:auto;opacity:1!important;transform:none!important;
+    pointer-events:auto;padding:44px var(--gutter)}
+}
+html.rm .story{height:auto}
+html.rm .story-pin{position:relative;height:auto;overflow:visible;padding:110px 0 40px}
+html.rm .can-stage{position:relative;inset:auto}
+html.rm .can-box{position:relative;left:auto;top:auto;transform:none;margin:30px auto}
+html.rm .scene{position:relative;inset:auto;opacity:1!important;transform:none!important;pointer-events:auto;padding:44px var(--gutter)}

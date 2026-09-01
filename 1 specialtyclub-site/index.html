@@ -15,27 +15,57 @@
 </nav>
 <div class="serial">Specialty Club — Winston-Salem NC</div>
 
-<header class="hero" id="top">
-  <p class="eyebrow fx">Contract Beverage Manufacturing · North Carolina</p>
-  <h1 class="display fx">We make the drink.<br>You build the brand.</h1>
-  <p class="sub fx">Full-service private-label manufacturing across every functional platform — formulation to filled, sealed, and shelf-ready.</p>
-  <div class="hero-actions fx">
-    <a class="btn-fill" href="contact.html">Start your beverage</a>
-    <a class="btn-ghost" href="#platforms">What we formulate</a>
-  </div>
-  <div class="hero-meta fx">
-    <div><span class="k">Formats</span><span class="v">Nitrogen&nbsp;Cans · RTD</span></div>
-    <div><span class="k">Built for</span><span class="v">Emerging &amp; established brands</span></div>
-    <div><span class="k">In-house</span><span class="v">Formulation · Design</span></div>
-  </div>
-</header>
+<!-- ==================== 02 CINEMATIC HERO / 03 SCROLL STORY ==================== -->
+<section class="story" id="top" aria-label="Specialty Club — private label beverage manufacturing">
+  <div class="story-pin">
+    <div class="story-bg" aria-hidden="true"></div>
 
-<hr class="divider">
+    <!-- ========== 04 CAN VISUAL — one continuous object.
+         SWAP POINT: replace specialty-club-sleek-can.png (PNG/WebP),
+         or replace this stage with a <canvas> + GLB later. ========== -->
+    <div class="can-stage" id="canStage" aria-hidden="true">
+      <div class="can-box" id="canBox">
+        <img id="storyCan" src="specialty-club-sleek-can.png" alt="" fetchpriority="high" />
+        <div class="can-shadow"></div>
+      </div>
+    </div>
 
-<section class="reveal" id="work">
-  <div class="r-left fx"><h2 class="heading">It isn't just a can.</h2></div>
-  <div class="can-wrap fx"><img src="can-blank.png" alt="Blank aluminum can — your brand here"></div>
-  <div class="r-right fx"><p class="body">Bring a recipe or build one with us. We handle formulation, filling, sealing, and the pallet on the truck — so your time goes into the brand around it.</p></div>
+    <div class="scene scene-1">
+      <div class="scene-inner">
+        <p class="eyebrow">Private Label Beverage Manufacturing</p>
+        <h1 class="scene-display">We build<br>beverage brands.</h1>
+        <p class="scene-sub">From formulation to full-scale production.</p>
+        <div class="hero-actions">
+          <a class="btn-fill" href="contact.html">Start your project</a>
+          <a class="btn-ghost" href="#platforms">Explore capabilities</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene scene-2">
+      <div class="scene-inner">
+        <h2 class="scene-display sd-md">From idea<br>to formula.</h2>
+        <p class="scene-sub">Flavor development, functional ingredients, formulation, testing, and scale-up &mdash; built around your beverage.</p>
+        <p class="caps-row">Formulation &middot; Flavor development &middot; Functional ingredients &middot; R&amp;D</p>
+      </div>
+    </div>
+
+    <div class="scene scene-3">
+      <div class="scene-inner">
+        <h2 class="scene-display sd-md">Formulated.<br>Produced.<br>Ready to scale.</h2>
+        <p class="scene-sub">Commercial beverage manufacturing with the infrastructure to take products from pilot runs to national production.</p>
+        <p class="caps-row">Since 2014 &middot; 12 platforms &middot; One roof</p>
+      </div>
+    </div>
+
+    <div class="scene scene-4">
+      <div class="scene-inner">
+        <h2 class="scene-display sd-md">One partner.<br>Multiple beverage categories.</h2>
+        <p class="caps-row">Functional &middot; Teas &middot; Energy &middot; Wellness &middot; Cannabinoids &middot; RTD</p>
+        <p class="scene-sub muted">The full platform list is just below.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <hr class="divider">
@@ -146,4 +176,5 @@
 const io=new IntersectionObserver((e)=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:0.12});
 document.querySelectorAll('.fx').forEach(el=>io.observe(el));
 </script>
+<script src="scroll-story.js" defer></script>
 </body></html>
