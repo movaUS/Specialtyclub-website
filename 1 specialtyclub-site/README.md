@@ -1,106 +1,155 @@
-# Specialty Club — v2
+# Specialty Club — pinned turntable, ORYZO treatment
 
-Static site. No build step, no framework, no third-party runtime dependencies.
-Drop the folder in as the Vercel Root Directory exactly as before.
+The 36-frame turntable from V1, re-graded for the warm-dark canvas and set in a
+pinned scroll section where the can stays centred while the copy changes around
+it. The rotation system itself is unchanged.
 
-## Deploy
-
-Everything at the repo root is served as-is. `.vercelignore` keeps `pipeline/`
-and the Python out of the deployment — it is build tooling, not site code.
-
-The contact form still posts to Formspree `mdeokrgy` and still redirects to
-`thanks.html`. Untouched.
-
-## What changed
-
-| | v1 | v2 |
-| --- | --- | --- |
-| Canvas | `#100904` walnut | `#0D0F11` steel |
-| Text | `#ffedd7` cream | `#F2EDE4` warm off-white, 16.5:1 |
-| Accent | `#dc5000` ember | `#4FA46E` leaf, 6.3:1 — passes AA for links |
-| Type | Inter only | Space Grotesk / Inter / IBM Plex Mono, self-hosted |
-| Can | 240px static PNG | 36-frame scroll-scrubbed turntable, five poses |
-| Product proof | 8 low-res cards | 5 high-res cans, scroll-driven gallery |
-| Line footage | none | two graded 9:16 clips, deferred |
-| Capability copy | invented placeholders | real numbers throughout |
-
-## The can
-
-`seq/1x` and `seq/2x` are 36 frames rendered from `HERO_CAN_V2_.png` and graded
-for the steel canvas. 2x (595 × 1442) is native resolution — the source render
-supports no more, so do not upscale a 3x tier; it would add weight and no detail.
-
-Rotation is one continuous 360° with five rests, scrubbed to scroll position.
-Never a timer. Drag and arrow keys still rotate it.
-
-| Stage | Panel | Frame |
-| --- | --- | --- |
-| Formulation | Front lockup | 0 |
-| Co-packing | Three-quarter | −6.4 |
-| Canning | Side panel | −12.7 |
-| Packaging | Reverse panel | −23.3 |
-| Design | Front lockup | −36 |
-
-The grade is a split-tone: printed cream ink and metal stay warm, the black body
-settles neutral-cool so it doesn't read brown against the steel canvas. The
-ambient floor is +11 because the new canvas (level 15.0) is lighter than the old
-one (9.7) — without it the can punches a hole in the page.
-
-## Regenerating frames
-
-```bash
-cd pipeline
-python3 step1_analyze.py        # geometry + shading, from HERO_CAN.png
-python3 step5_flatten.py        # strip painted shading off the wrap
-python3 step6_render_art.py     # 36 neutral frames
-python3 step7_relight_steel.py  # split-tone grade for #0D0F11
+```
+index.html            the pinned reveal section
+can-turntable.js      component, no dependencies, ~5 KB unminified
+can-poster.webp/.png  frame 0, the no-JavaScript fallback
+seq/1x/can_NN.webp    294 × 692    1.05 MB total  (30 KB/frame)
+seq/2x/can_NN.webp    588 × 1384   2.51 MB total  (71 KB/frame)
+pipeline/             frame generation, plus the source wrap artwork
 ```
 
-Geometry constants are recalibrated for the V2 hero (`CX=512, R=289`). If the
-canvas colour ever changes, `step7`'s `BG`, `SPLIT`, `LIFT` and `RIM_*` are the
-knobs. New label artwork: replace `die_line_SP_black_can.png` and re-run from
-step 5.
+## Source artwork
 
-## Performance
+The label is the supplied 360° wrap (`pipeline/die_line_SP_black_can.png`),
+mapped at printed proportions. Three things had to be handled.
 
-First paint fetches ~195 KB: HTML, CSS, three woff2, the hero can and the
-component. The hero can doubles as the turntable poster, so it is cached before
-the sequence starts and is the LCP element (preloaded, `fetchpriority=high`).
+**The wrap and the original hero photo are different cans.** The lockup covers
+134° of arc in the artwork but only 111° on the photographed can, and the
+proportions disagree by 10.6% — the photo's label area is 1.470 wide-to-tall
+against the sleeve's 202/152 = 1.329. The photo was a generic mockup with the
+art dropped on at whatever size looked right.
 
-The 36 frames start only when the section is within 200px or the browser goes
-idle, and arrive in a spread order so coarse scrubbing works early. Both videos
-carry `preload="none"` and get their `src` assigned by IntersectionObserver, so
-they cannot delay first render. Tier is chosen from pixel density and
-connection; `Save-Data` and 2G/3G get 1x.
+Registration therefore locks to the **circumference**, so the artwork keeps its
+printed proportions, and the wordmark is aligned to the height it sat at in the
+photo. What gets cropped is the sleeve's blank top and bottom margin, which is
+the correct thing to lose. **The can now reads with a noticeably larger
+wordmark than the original hero image** — this was accepted deliberately.
 
-## Accessibility
+**The wrap arrived with fake lighting painted into it.** Background ran 7 to 110
+across a single row, near-constant down each column: vertical gradient bands
+simulating a cylinder. Left in, you would get lighting twice — painted
+highlights rotating with the label while the real highlight stayed put.
+`step5_flatten.py` keys the ink against a backdrop estimated from the
+artwork-free top and bottom margins and rebuilds it as flat ink on true black.
+The Nutrition Facts box needed care: it is a flat black panel sitting *over* the
+gradient, which the keying handles by treating its interior as background.
 
-Reduced motion flattens the pinned section and the gallery into static stacked
-layouts and stops scroll-scrubbing; drag and keyboard still work. No zoom lock.
-A `<noscript>` block reveals everything if JS fails, so no content is trapped
-behind an observer. Focus rings are visible and there is a skip link.
+**Resolution is 1446px around, roughly 182dpi.** That is 82% of what the can
+needs, so the front is upscaled about 23%. The panel stays legible at 2x — see
+`preview.gif` — but higher-resolution or vector artwork would sharpen the
+wordmark if it ever becomes available.
 
-## Facts published
+## The grading pass
 
-500,000 cans/week · 12 oz sleek, 12 oz standard, 19.2 oz · 10,000 per SKU ·
-6–8 weeks concept to finished goods · nitrogen dosing on all lines ·
-GMP-certified, NCDA&CS permitted, FDA registered · assayed each batch.
+Frames are rendered neutral, then graded for the warm-dark canvas. The
+photographic lighting was built for white seamless: two specular bands and a
+core sitting at level 6–8, below Walnut Shadow at 9.7. Ungraded, the can reads
+as a cold hole. `step7_relight_art.py` applies a warm tint toward the printed
+cream `(1.00, 0.945, 0.872)`, a warm rim over the outer 16% of the radius
+weighted to the upper right, and a +5 ambient floor. All screen-space, so they
+stay locked while the label rotates underneath.
 
-Every invented placeholder from the prototype is gone. If any line above is
-wrong, it is wrong on a public page — check it.
+## Section behaviour
+
+- `460vh` wrapper, `100vh` sticky stage. Rotation is scrubbed directly to
+  scroll position — no timed autoplay anywhere.
+- The can **settles into a pose per section** rather than spinning at a constant
+  rate, matching the way the ORYZO coaster changes orientation between
+  sections. Four rests across one continuous 360° in a single direction:
+
+  | Section | Panel | Angle | Frame |
+  | --- | --- | --- | --- |
+  | Formulation | Front lockup | 0° | 0 |
+  | Production | Benefits column | −127° | −12.7 |
+  | Packaging | Nutrition Facts | −233° | −23.3 |
+  | Finished | Front lockup | −360° | −36 |
+
+  The three printed panels sit at 0° and ±127.25° on the wrap, measured from
+  the artwork. Frame granularity is 10°, so the two side panels land about 2.8°
+  off centre — not perceptible. Rotation runs in one direction throughout.
+
+  Configured through the `stops` option; each entry is a scroll position, a
+  frame, and a `hold` half-width for the plateau. Transitions ease in and out.
+  Still a pure function of scroll, never a timer. Omit `stops` to get the
+  constant-rate spin back.
+- Four steps — formulation, production, packaging, finished — crossfade as
+  overlays over the same three-column grid, so heading and body stay one block
+  in the markup and survive the reduced-motion and mobile reflows.
+- The step index sits bottom-left on dashed hairlines. It marks position in the
+  sequence, which is structural, not decorative.
+- Drag and arrow keys still rotate the can. The copy overlays are
+  `pointer-events: none` so they never intercept the grab.
+
+## Loading
+
+First paint waits on nothing but the poster. `preload: 1` fetches only frame 0;
+the remaining 35 start when the section comes within 200px of the viewport or
+when the browser goes idle, whichever lands first.
+
+They arrive in a spread order — every ninth frame, then every sixth, then the
+gaps — so coarse scrubbing works long before the last frame is in. Any frame
+not yet present draws the nearest one that is. Four requests run in parallel.
+
+Tier is chosen from pixel density and connection: 2x on high-density displays,
+1x when `Save-Data` is set or the connection reports 2G or 3G.
+
+## Token conformance
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| Walnut Shadow | `#100904` | page canvas, both sections |
+| Warm Cream | `#ffedd7` | all text |
+| Cork Border | `#40372e` | dashed dividers, step index, spec rows |
+| Driftwood | `#6c5f51` | muted labels, right-edge serial |
+| Ember | `#dc5000` | the contact link only |
+| Bark Brown | `#382416` | selection highlight |
+
+Type is uppercase weight 500 throughout, with weight 400 mixed case reserved
+for the 29px body copy. Line-height is 0.9 on display and heading sizes. No
+shadows, no solid dividers, no centred body copy, no filled CTA.
+
+**Halyard Display Variable is not loaded.** The stack falls to Inter, the
+documented structural substitute. If you have the Typekit kit, add it and the
+`--font-display` variable picks it up with no other change.
 
 ## Open items
 
-- **Brand green is provisional.** `#4FA46E` was chosen to clear 4.5:1 on the
-  canvas. Send `LOGO_SC.pdf` and it gets retuned to the actual leaf; only the
-  `--accent` token changes.
-- **Logo is raster.** 150 × 162 PNG, used at 40px so it holds, but an SVG would
-  be sharper in the footer and on retina.
-- **Die-line is 1446px around (~182dpi)**, about 82% of what the can needs, so
-  the front panel is upscaled ~23%. Vector artwork would sharpen the wordmark.
-- **Lab photography is still AI-generated** and used only as heavily darkened
-  atmosphere behind type in scene 02. Swap in real R&D photos when they arrive.
-- **Line footage is handheld and vertical.** Held to 9:16 as specified. A locked
-  landscape shot would open up a full-bleed desktop band that portrait cannot fill.
-- **THC/CBD panel** is visible during rotation, as agreed. Revisit with
-  compliance before any paid promotion.
+**The lid tab is static.** Accepted for V1. More noticeable on the dark canvas
+than on white, because the rim light draws the eye to the lid. Watch it in
+testing; the fix is to cut the tab out and rotate it on its own ellipse.
+
+**Copy is placeholder.** Written to the manufacturing story rather than as
+consumer advertising, but the specifics — minimums, lead times, assay practice
+— are invented. In particular "each batch is assayed before it fills" is a
+factual claim about your process; confirm it before publishing.
+
+**This is a hemp product.** The panel declares CBD 40mg and THC 10mg.
+Advertising rules for hemp-derived THC beverages vary by state and cover
+age-gating, health claims and where ads may run. The combination of "zero
+sugar" and "keto friendly" beside a cannabinoid panel is the kind of thing that
+attracts attention. Get the site copy through compliance review before launch.
+
+**Halyard Display Variable is not loaded.** The stack falls back to Inter, the
+documented substitute. Add the Typekit kit and `--font-display` picks it up.
+
+## Regenerating
+
+```bash
+python3 pipeline/step1_analyze.py       # geometry + shading field from the photo
+python3 pipeline/step5_flatten.py       # strip painted shading from the wrap
+python3 pipeline/step6_render_art.py    # map artwork to the cylinder, 36 frames
+python3 pipeline/step7_relight_art.py   # warm grade + rim for the dark canvas
+```
+
+To swap in new artwork, replace `pipeline/die_line_SP_black_can.png` and re-run
+from step 5. If the lockup moves, update `LOCK_X` / `LOCK_Y` in step 6 — they
+are the wordmark's centre in the flat, and everything registers off them.
+
+Step 7's constants are the ones to tune if the canvas colour changes: `WARM`,
+`TINT`, `RIM_R` / `RIM_L`, and `LIFT`. Set `TINT` and `LIFT` to 0 to get neutral
+frames back for a light-background context.

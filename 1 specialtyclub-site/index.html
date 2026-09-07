@@ -3,414 +3,403 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Specialty Club — Contract Beverage Manufacturing</title>
-<meta name="description" content="Contract beverage manufacturer in Winston-Salem, NC. Formulation, co-packing, nitrogen canning, packaging, and design for functional, cannabinoid, and RTD beverages — under one roof since 2014.">
-<link rel="canonical" href="https://specialtyclub.com/">
-<meta name="theme-color" content="#0D0F11">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-<link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Specialty Club">
-<meta property="og:title" content="Specialty Club — Contract Beverage Manufacturing">
-<meta property="og:description" content="Private label beverage manufacturing in Winston-Salem, NC. Formulation, co-packing, nitrogen canning, packaging and design — under one roof since 2014.">
-<meta property="og:url" content="https://specialtyclub.com/">
-<meta property="og:image" content="https://specialtyclub.com/og-card.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preload" href="fonts/space-grotesk-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="can-poster.webp" as="image" fetchpriority="high">
-<link rel="stylesheet" href="styles.css">
-<noscript><style>
-.fx{opacity:1;transform:none}
-.reveal{height:auto}
-.reveal__stage{position:static;height:auto;padding:60px 0}
-.stage{position:static;opacity:1;visibility:visible;grid-template-columns:1fr;gap:20px;padding:0 var(--gut) 56px}
-.stage h2,.stage p{grid-column:1;justify-self:start;text-align:left}
-.reveal__object{position:static;transform:none;margin:0 auto 52px;width:min(52vw,280px);max-height:none}
-.index,.hint{position:static;margin:0 var(--gut) 36px}
-.sc-gal{height:auto}.sc-gal__stage{position:static;height:auto;padding:80px 0}
-.sc-gal__track{overflow-x:auto}
-</style></noscript>
+<title>Specialty Club — Private label beverage manufacturing</title>
+<meta name="description" content="Formulation, production, packaging and finished beverage under one roof.">
+<style>
+  :root {
+    --color-warm-cream: #ffedd7;
+    --color-walnut-shadow: #100904;
+    --color-bark-brown: #382416;
+    --color-cork-border: #40372e;
+    --color-driftwood: #6c5f51;
+    --color-ember-accent: #dc5000;
+
+    /* Halyard Display Variable is the real face; Inter is the documented
+       structural substitute. Swap the stack if you have the Typekit kit. */
+    --font-display: "halyard-display-variable", "Inter", "Söhne",
+                    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    --text-display: 51px;  --leading-display: 0.9;
+    --text-heading: 41px;  --leading-heading: 0.9;
+    --text-body: 29px;     --leading-body: 1.26;
+    --text-sub: 18px;
+    --sp-12: 12px; --sp-18: 18px; --sp-24: 24px; --sp-41: 41px; --sp-68: 68px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--color-walnut-shadow);
+    color: var(--color-warm-cream);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-feature-settings: "ss01" on;
+  }
+
+  ::selection { background: var(--color-bark-brown); color: var(--color-warm-cream); }
+
+  a { color: inherit; }
+
+  /* ------------------------------------------------------------- nav ----- */
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-18);
+    padding: var(--sp-24) clamp(var(--sp-18), 3vw, var(--sp-41));
+    font-size: 12px;
+    text-transform: uppercase;
+    mix-blend-mode: normal;
+  }
+
+  .nav__list { display: flex; gap: var(--sp-24); list-style: none; margin: 0; padding: 0; }
+  .nav__list a { text-decoration: none; padding-bottom: 3px; }
+  .nav__list a[aria-current="true"] { border-bottom: 1px dashed var(--color-cork-border); }
+
+  /* right-edge serial, a physical-product artifact */
+  .serial {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    z-index: 20;
+    transform: rotate(90deg) translateX(50%);
+    transform-origin: right center;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--color-driftwood);
+    pointer-events: none;
+  }
+
+  /* -------------------------------------------------------- pinned reveal - */
+  .reveal { position: relative; height: 460vh; }
+
+  .reveal__stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+
+  /* Each step is a full-bleed overlay running the same three-column grid, so
+     the heading and its body copy stay one block in the markup. */
+  .stage {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr minmax(200px, 30vw) 1fr;
+    align-items: center;
+    gap: var(--sp-18);
+    padding: 0 clamp(var(--sp-18), 3vw, var(--sp-41));
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .35s ease;
+    pointer-events: none;
+  }
+
+  .stage[data-active] { opacity: 1; visibility: visible; }
+
+  .stage h2 {
+    grid-column: 1;
+    justify-self: end;
+    max-width: 20ch;
+    margin: 0;
+    font-size: clamp(26px, 3.4vw, var(--text-heading));
+    line-height: var(--leading-heading);
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .stage p {
+    grid-column: 3;
+    justify-self: start;
+    max-width: 32ch;
+    margin: 0;
+    font-size: clamp(18px, 2.1vw, var(--text-body));
+    line-height: var(--leading-body);
+    font-weight: 400;
+  }
+
+  .reveal__object {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    width: min(30vw, 320px);
+    aspect-ratio: 294 / 692;
+    max-height: 74vh;
+  }
+
+  .reveal__poster {
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+
+  .reveal__poster img,
+  .turntable__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .turntable__canvas { opacity: 0; transition: opacity .5s ease; cursor: grab; }
+  .reveal[data-ready] .turntable__canvas { opacity: 1; }
+  .reveal[data-dragging] .turntable__canvas { cursor: grabbing; }
+  .reveal[data-ready] .reveal__poster { opacity: 0; transition: opacity .5s ease; }
+
+  .turntable__canvas:focus-visible {
+    outline: 1px dashed var(--color-warm-cream);
+    outline-offset: 18px;
+  }
+
+  /* ------------------------------------------------------------ index ----- */
+  .index {
+    position: absolute;
+    left: clamp(var(--sp-18), 3vw, var(--sp-41));
+    bottom: var(--sp-41);
+    z-index: 5;
+    display: flex;
+    gap: var(--sp-18);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--color-driftwood);
+  }
+
+  .index li { padding-top: 8px; border-top: 1px dashed var(--color-cork-border); min-width: 92px; }
+  .index li[data-active] { color: var(--color-warm-cream); border-top-color: var(--color-driftwood); }
+
+  .hint {
+    position: absolute;
+    right: clamp(var(--sp-18), 3vw, var(--sp-41));
+    bottom: var(--sp-41);
+    z-index: 5;
+    margin: 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--color-driftwood);
+  }
+
+  /* ---------------------------------------------------------- spec block -- */
+  .spec {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--sp-68) clamp(var(--sp-18), 3vw, var(--sp-41));
+  }
+
+  .spec h2 {
+    margin: 0 0 var(--sp-41);
+    font-size: clamp(28px, 4.2vw, var(--text-display));
+    line-height: var(--leading-display);
+    font-weight: 500;
+    text-transform: uppercase;
+    max-width: 18ch;
+  }
+
+  .spec dl { margin: 0; max-width: 62rem; }
+
+  .spec__row {
+    display: grid;
+    grid-template-columns: minmax(140px, 22%) 1fr;
+    gap: var(--sp-18);
+    padding: var(--sp-18) 0;
+    border-top: 1px dashed var(--color-cork-border);
+  }
+
+  .spec dt { font-size: 12px; text-transform: uppercase; }
+  .spec dd { margin: 0; font-size: clamp(15px, 1.5vw, var(--text-sub)); font-weight: 400; color: var(--color-warm-cream); }
+
+  .colophon {
+    padding: 0 clamp(var(--sp-18), 3vw, var(--sp-41)) var(--sp-68);
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--color-driftwood);
+  }
+
+  .colophon a { color: var(--color-ember-accent); text-decoration: none; }
+  .colophon a:hover, .colophon a:focus-visible { text-decoration: underline; }
+
+  /* ------------------------------------------------------------ mobile ---- */
+  @media (max-width: 900px) {
+    .reveal { height: 420vh; }
+    .stage {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 42vh auto;
+      align-content: center;
+      gap: var(--sp-24);
+      padding-top: var(--sp-68);
+      padding-bottom: 120px;
+    }
+    .stage h2 { grid-column: 1; grid-row: 1; justify-self: start; }
+    .stage p  { grid-column: 1; grid-row: 3; justify-self: start; max-width: 34ch; }
+    .reveal__object { width: 52vw; max-height: 40vh; }
+    .index { gap: var(--sp-12); font-size: 10px; }
+    .index li { min-width: 0; flex: 1; }
+    .hint, .serial { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { height: auto; }
+    .reveal__stage { position: static; height: auto; padding: 24vh 0 var(--sp-68); }
+    .stage {
+      position: static;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      grid-template-columns: 1fr;
+      gap: var(--sp-18);
+      padding-bottom: var(--sp-68);
+    }
+    .stage h2, .stage p { grid-column: 1; justify-self: start; }
+    .reveal__object {
+      position: static;
+      transform: none;
+      margin: 0 auto var(--sp-68);
+      width: min(52vw, 300px);
+    }
+    .index, .hint { position: static; margin: 0 clamp(18px, 3vw, 41px) var(--sp-41); }
+    .turntable__canvas, .reveal__poster { transition: none; }
+  }
+
+</style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
 
-<nav id="nav">
-  <a class="brand" href="index.html"><img src="logo-cream.png" alt="Specialty Club" width="150" height="162" style="height:40px;width:auto"></a>
-  <ul>
-    <li><a href="#platforms">Platforms</a></li>
-    <li><a href="#process">Process</a></li>
-    <li><a href="#proof">Proof</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="contact.html">Start a project</a></li>
+<nav class="nav">
+  <span>Specialty Club</span>
+  <ul class="nav__list">
+    <li><a href="#reveal" aria-current="true">Process</a></li>
+    <li><a href="#spec">Capability</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
 </nav>
 
-<span class="serial">Specialty Club — Winston-Salem NC</span>
+<span class="serial">Specialty Club — 12 fl oz</span>
 
-<main id="main">
-
-<!-- 01 ------------------------------------------------------------- hero -->
-<header class="sc-hero">
-  <div class="sc-hero__copy">
-    <p class="eyebrow">Private label beverage manufacturing</p>
-    <h1 class="display">We build<br>beverage brands.</h1>
-    <p class="lede">From formulation to full-scale production, under one roof in North Carolina.</p>
-    <div class="sc-hero__actions">
-      <a class="btn-fill" href="contact.html">Start your project</a>
-      <a class="btn-ghost" href="#platforms">Explore capabilities</a>
-    </div>
-  </div>
-
-  <div class="sc-hero__can">
-    <img src="can-poster.webp" width="595" height="1442" fetchpriority="high"
-         alt="A matte black 12 fl oz Specialty Club can with the SC monogram and wordmark in cream.">
-  </div>
-
-  <div class="sc-hero__meta">
-    <div><span class="k">Operating since</span><span class="v">2014</span></div>
-    <div><span class="k">Functional platforms</span><span class="v">Twelve</span></div>
-    <div><span class="k">Formulation to fill</span><span class="v">One roof</span></div>
-  </div>
-
-  <p class="sc-scrollcue">Scroll</p>
-</header>
-
-<!-- 02 ----------------------------------------------------- idea → formula -->
-<section class="sc-idea" id="formulation">
-  <div class="sc-idea__bg" aria-hidden="true">
-    <img src="rnd-botanicals.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
-  </div>
-  <div class="sc-idea__in fx">
-    <p class="eyebrow">What we formulate</p>
-    <h2 class="display">From idea<br>to formula.</h2>
-    <p class="lede">Flavor development, functional ingredients, formulation, testing and scale-up — built
-      around your beverage. Every run begins in the lab, not on the line: we build the flavor system,
-      adjust for shelf stability, and lock the specification before a single can is filled.</p>
-    <ul class="sc-tags">
-      <li>Formulation</li><li>Flavor development</li><li>Functional ingredients</li><li>R&amp;D</li>
-    </ul>
-  </div>
-</section>
-
-<!-- 03 ---------------------------------------------- formula → production -->
-<section class="sc-prod">
-  <figure class="sc-prod__film fx">
-    <video muted loop playsinline preload="none" poster="line-coder-poster.jpg"
-           data-src="line-coder.mp4" aria-label="Cans moving through date coding on the Specialty Club line."></video>
-    <figcaption>Date coding · Winston-Salem</figcaption>
-  </figure>
-
-  <div class="fx">
-    <p class="eyebrow">Formula to finished pallet</p>
-    <h2 class="heading">Formulated.<br>Produced.<br>Ready to scale.</h2>
-    <p class="lede">Commercial beverage manufacturing with the infrastructure to take products from pilot
-      runs to national production.</p>
-
-    <dl class="sc-spec">
-      <div class="sc-spec__row">
-        <dt>Capacity</dt>
-        <dd><b>Up to 500,000 cans per week.</b> Small-batch trials through full production runs.</dd>
-      </div>
-      <div class="sc-spec__row">
-        <dt>Formats</dt>
-        <dd>12 oz sleek, 12 oz standard and 19.2 oz. Sleeved or direct print.</dd>
-      </div>
-      <div class="sc-spec__row">
-        <dt>Minimum order</dt>
-        <dd>10,000 units per SKU.</dd>
-      </div>
-      <div class="sc-spec__row">
-        <dt>Lead time</dt>
-        <dd>6 to 8 weeks from concept to finished goods, with artwork and regulatory review running in parallel.</dd>
-      </div>
-      <div class="sc-spec__row">
-        <dt>Nitrogen dosing</dt>
-        <dd>Available across all lines for shelf life, purity and a clean, steady pour.</dd>
-      </div>
-      <div class="sc-spec__row">
-        <dt>Compliance</dt>
-        <dd>GMP-certified facility. Permitted by the North Carolina Department of Agriculture &amp;
-          Consumer Services and registered with the U.S. Food and Drug Administration.</dd>
-      </div>
-    </dl>
-  </div>
-</section>
-
-<!-- 04 --------------------------------------------------------- platforms -->
-<section class="sc-plat" id="platforms">
-  <div class="fx">
-    <p class="eyebrow">Every functional platform</p>
-    <h2 class="heading">One partner.<br>Twelve platforms.</h2>
-  </div>
-  <ul class="sc-plat__list" id="platlist">
-    <li><span class="sc-plat__name">Cannabinoids</span><span class="sc-plat__note">THC · CBD · Hemp</span></li>
-    <li><span class="sc-plat__name">Functional mushrooms</span><span class="sc-plat__note">Lion's Mane · Reishi · Cordyceps</span></li>
-    <li><span class="sc-plat__name">Adaptogens</span><span class="sc-plat__note">Ashwagandha · Rhodiola</span></li>
-    <li><span class="sc-plat__name">Nootropics</span><span class="sc-plat__note">Focus &amp; clarity blends</span></li>
-    <li><span class="sc-plat__name">Kava</span><span class="sc-plat__note">Calm &amp; unwind</span></li>
-    <li><span class="sc-plat__name">Kratom</span><span class="sc-plat__note">Botanical actives</span></li>
-    <li><span class="sc-plat__name">Botanical extracts</span><span class="sc-plat__note">Herbal &amp; plant-based</span></li>
-    <li><span class="sc-plat__name">Electrolytes</span><span class="sc-plat__note">Hydration &amp; recovery</span></li>
-    <li><span class="sc-plat__name">Vitamins &amp; minerals</span><span class="sc-plat__note">Fortified formulas</span></li>
-    <li><span class="sc-plat__name">Pre + probiotics</span><span class="sc-plat__note">Gut-forward drinks</span></li>
-    <li><span class="sc-plat__name">Amino acids</span><span class="sc-plat__note">L-Theanine · Taurine</span></li>
-    <li><span class="sc-plat__name">Natural energy</span><span class="sc-plat__note">Clean caffeine &amp; guarana</span></li>
-  </ul>
-  <p class="sc-plat__foot">Don't see your active? If it can go in a can, we can formulate around it.</p>
-</section>
-
-<!-- 05 ------------------------------------------------- the can, in stages -->
-<section class="reveal" id="process">
+<section class="reveal" id="reveal">
   <div class="reveal__stage" data-turntable-stage>
 
     <article class="stage" data-stage="0" data-active>
       <h2>It starts as a formula.</h2>
-      <p>Build something new, or adapt a health-forward base across any of our functional platforms.
-         The flavor system, the actives and the shelf-life target are set before anything is scheduled.</p>
+      <p>Every run begins in the lab, not on the line. We build the flavor
+         system, adjust for shelf stability, and lock the specification before
+         a single can is filled.</p>
     </article>
 
     <article class="stage" data-stage="1">
-      <h2>Then it becomes a batch.</h2>
-      <p>Blending and precision filling happen under one roof, from first trial run to full-scale,
-         high-speed production. Each batch is assayed before it fills.</p>
+      <h2>Dose is a manufacturing problem.</h2>
+      <p>Nano-emulsion carries the cannabinoid into suspension so it stays
+         evenly distributed through the run, and each batch is assayed before
+         it fills.</p>
     </article>
 
     <article class="stage" data-stage="2">
-      <h2>The can is part of the product.</h2>
-      <p>High-speed canning with nitrogen dosing available on every line — specified alongside the
-         liquid, not after it, because the format decides how the drink pours and how long it keeps.</p>
+      <h2>The panel is part of the product.</h2>
+      <p>Nutrition, allergen and cannabinoid statements are set alongside the
+         artwork and reviewed before plates are cut. The 202 × 152 mm sleeve is
+         specified with the liquid, not after it.</p>
     </article>
 
     <article class="stage" data-stage="3">
-      <h2>Packed for the shelf.</h2>
-      <p>Sustainable, retail-ready packaging. Nutrition panels, allergen statements and label copy
-         are reviewed before plates are cut, not after.</p>
-    </article>
-
-    <article class="stage" data-stage="4">
       <h2>And it leaves as yours.</h2>
-      <p>Naming, label and full identity from our in-house studio. You leave with a market-ready
-         brand, not just a beverage — your name on the can, and ours nowhere on it.</p>
+      <p>Formulation, fill, packaging and compliance in a single line. Your
+         brand on the can, and our name nowhere on it.</p>
     </article>
 
     <div class="reveal__object" data-turntable-mount>
       <picture class="reveal__poster">
-        <img data-turntable-poster src="can-poster.webp" width="595" height="1442" loading="lazy" decoding="async"
-             alt="The Specialty Club can rotating through the five stages of production.">
+        <source srcset="can-poster.webp" type="image/webp">
+        <img data-turntable-poster src="can-poster.png" width="294" height="692"
+             fetchpriority="high"
+             alt="A matte black 12 fl oz can printed with the Specialty Club monogram and wordmark in cream.">
       </picture>
     </div>
 
     <ol class="index" id="index">
       <li data-active>Formulation</li>
-      <li>Co-packing</li>
-      <li>Canning</li>
+      <li>Production</li>
       <li>Packaging</li>
-      <li>Design</li>
+      <li>Finished</li>
     </ol>
 
     <p class="hint">Scroll to rotate — or drag the can</p>
   </div>
 </section>
 
-<!-- 06 ------------------------------------------------------------ proof -->
-<section class="sc-proof" id="proof">
-  <div class="sc-proof__film" aria-hidden="true">
-    <video muted loop playsinline preload="none" poster="line-run-poster.jpg" data-src="line-run.mp4"></video>
-  </div>
-  <div class="sc-proof__in fx">
-    <p class="eyebrow">Our line · Winston-Salem, NC</p>
-    <h2 class="heading">Real cans.<br>Real volume.<br>Running now.</h2>
-    <p class="lede">Not a design agency that outsources the hard part. A working production floor.</p>
-  </div>
-  <ul class="sc-proof__stats fx">
-    <li><b>500,000</b>Cans per week</li>
-    <li><b>10,000</b>Minimum per SKU</li>
-    <li><b>6–8 weeks</b>Concept to finished goods</li>
-    <li><b>Since 2014</b>In functional beverage</li>
-  </ul>
-</section>
-
-<!-- 07 ---------------------------------------------------------- gallery -->
-<section class="sc-gal" id="made">
-  <div class="sc-gal__stage">
-    <div class="sc-gal__head fx">
-      <p class="eyebrow">Made at Specialty Club</p>
-      <h2 class="heading">Brands that left<br>as finished goods.</h2>
+<section class="spec" id="spec">
+  <h2>One line, from formula to finished pallet.</h2>
+  <dl>
+    <div class="spec__row">
+      <dt>Formats</dt>
+      <dd>12 oz sleek on a 202 × 152 mm sleeve, plus 12 oz standard and 16 oz. Matte and gloss varnish available on all three.</dd>
     </div>
-    <div class="sc-gal__track" id="galtrack">
-      <figure class="sc-gal__item">
-        <img src="can-probiotic-water.webp" width="812" height="1150" loading="lazy" decoding="async" alt="Earth Bevs Probiotic Water can.">
-        <figcaption><span class="n">Probiotic Water</span><span class="c">Pre + probiotics</span></figcaption>
-      </figure>
-      <figure class="sc-gal__item">
-        <img src="can-aloe.webp" width="712" height="1150" loading="lazy" decoding="async" alt="Aloe Water original flavor can.">
-        <figcaption><span class="n">Aloe Water</span><span class="c">Botanical extracts</span></figcaption>
-      </figure>
-      <figure class="sc-gal__item">
-        <img src="can-vitamin-tea.webp" width="492" height="1150" loading="lazy" decoding="async" alt="Earth Bevs Vitamin Tea, Strawberry Shortcake can.">
-        <figcaption><span class="n">Vitamin Tea</span><span class="c">Vitamins &amp; minerals</span></figcaption>
-      </figure>
-      <figure class="sc-gal__item">
-        <img src="can-probiotic-strawberry.webp" width="766" height="1150" loading="lazy" decoding="async" alt="Earth Bevs Probiotic Water, Strawberry can.">
-        <figcaption><span class="n">Probiotic Strawberry</span><span class="c">Pre + probiotics</span></figcaption>
-      </figure>
-      <figure class="sc-gal__item">
-        <img src="can-hemp-drnk.webp" width="682" height="1150" loading="lazy" decoding="async" alt="Hemp Drnk raspberry iced tea can.">
-        <figcaption><span class="n">Hemp Drnk</span><span class="c">Cannabinoids</span></figcaption>
-      </figure>
+    <div class="spec__row">
+      <dt>Minimums</dt>
+      <dd>Production runs from one pallet for existing formulations, and from a single batch for new development work.</dd>
     </div>
-  </div>
+    <div class="spec__row">
+      <dt>Development</dt>
+      <dd>Bench samples in two weeks. Shelf-life and stability testing run in parallel with artwork and regulatory review.</dd>
+    </div>
+    <div class="spec__row">
+      <dt>Compliance</dt>
+      <dd>Nutrition panels, allergen statements and label copy reviewed before plates are cut, not after.</dd>
+    </div>
+  </dl>
 </section>
 
-<!-- 08 -------------------------------------------------------------- cta -->
-<section class="sc-cta" id="contact">
-  <div class="fx sc-cta__in">
-    <p class="eyebrow">Start a project</p>
-    <h2 class="display">Start your beverage today.</h2>
-  </div>
-  <p class="lede fx">Tell us what you're building. We'll come back with a path from recipe to ready-to-ship.</p>
-  <div class="sc-cta__actions fx">
-    <a class="btn-fill" href="contact.html">Get in touch</a>
-    <a class="btn-ghost" href="tel:+18009130257">+1 (800) 913-0257</a>
-  </div>
-</section>
-
-</main>
-
-<footer>
-  <span class="f-brand"><img src="logo-mono.png" alt="Specialty Club" width="150" height="162"></span>
-  <div class="f-contact">
-    <a href="tel:+18009130257">+1 (800) 913-0257</a>
-    <a href="mailto:sales@thespecialtyclub.com">sales@thespecialtyclub.com</a>
-    <span>105 Akron Dr · Winston-Salem, NC</span>
-  </div>
-  <span class="f-legal">© 2026 Specialty Club Corp</span>
+<footer class="colophon" id="contact">
+  <p>Private label beverages, built to your specification —
+     <a href="mailto:hello@specialtyclub.com">hello@specialtyclub.com</a></p>
 </footer>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Specialty Club",
-"description":"Contract and private label beverage manufacturer offering formulation, co-packing, nitrogen canning, packaging and design for functional, cannabinoid and RTD beverages.",
-"url":"https://specialtyclub.com/","telephone":"+1-800-913-0257","email":"sales@thespecialtyclub.com",
-"address":{"@type":"PostalAddress","streetAddress":"105 Akron Dr","addressLocality":"Winston-Salem","addressRegion":"NC","addressCountry":"US"},
-"foundingDate":"2014","image":"https://specialtyclub.com/og-card.jpg"}
-</script>
 
 <script src="can-turntable.js"></script>
 <script>
 (function () {
-  'use strict';
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* section reveals */
-  var fx = document.querySelectorAll('.fx');
-  if ('IntersectionObserver' in window && !reduce) {
-    var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { rootMargin: '0px 0px -12% 0px' });
-    fx.forEach(function (el) { io.observe(el); });
-  } else {
-    fx.forEach(function (el) { el.classList.add('in'); });
-  }
-
-  /* nav gains a backdrop once it leaves the hero */
-  var nav = document.getElementById('nav');
-  addEventListener('scroll', function () {
-    nav.classList.toggle('tucked', scrollY > 80);
-  }, { passive: true });
-
-  /* video: nothing is fetched until the section is close */
-  document.querySelectorAll('video[data-src]').forEach(function (v) {
-    var load = function () {
-      if (v.src) return;
-      v.src = v.dataset.src;
-      v.load();
-      var p = v.play();
-      if (p && p.catch) p.catch(function () {});
-    };
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es, o) {
-        if (es[0].isIntersecting) { load(); o.disconnect(); }
-      }, { rootMargin: '300px' }).observe(v);
-    } else { load(); }
-  });
-
-  /* platform index lights the row nearest the middle of the viewport */
-  var rows = [].slice.call(document.querySelectorAll('#platlist li'));
-  if (rows.length && !reduce) {
-    var tick = false;
-    var lightRows = function () {
-      var mid = innerHeight * 0.55;
-      rows.forEach(function (li) {
-        var r = li.getBoundingClientRect();
-        li.classList.toggle('lit', r.top < mid && r.bottom > innerHeight * 0.18);
-      });
-      tick = false;
-    };
-    addEventListener('scroll', function () {
-      if (!tick) { tick = true; requestAnimationFrame(lightRows); }
-    }, { passive: true });
-    lightRows();
-  } else {
-    rows.forEach(function (li) { li.classList.add('lit'); });
-  }
-
-  /* gallery: vertical scroll drives the lineup sideways */
-  var gal = document.getElementById('made');
-  var track = document.getElementById('galtrack');
-  if (gal && track && !reduce) {
-    var shift = 0, gtick = false;
-    var measure = function () {
-      if (!matchMedia('(min-width: 761px)').matches) {
-        shift = 0; gal.style.height = ''; track.style.transform = '';
-        return;
-      }
-      shift = Math.max(0, track.scrollWidth - innerWidth + 40);
-      /* the section is only as tall as the sideways travel it has to cover */
-      gal.style.height = shift > 0 ? (innerHeight + shift) + 'px' : '100svh';
-    };
-    var move = function () {
-      if (!shift) return;
-      var r = gal.getBoundingClientRect();
-      var span = gal.offsetHeight - innerHeight;
-      var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
-      track.style.transform = 'translate3d(' + (-p * shift) + 'px,0,0)';
-      gtick = false;
-    };
-    addEventListener('scroll', function () {
-      if (!gtick) { gtick = true; requestAnimationFrame(move); }
-    }, { passive: true });
-    addEventListener('resize', function () { measure(); move(); }, { passive: true });
-    measure(); move();
-  }
-
-  /* the can: five poses across one continuous turn */
-  var STAGES = 5;
+  var STAGES = 4;
   var groups = document.querySelectorAll('.stage');
   var index = document.getElementById('index').children;
   var current = -1;
+
   function setStage(i) {
     if (i === current) return;
     current = i;
     for (var g = 0; g < groups.length; g++) {
-      groups[g].toggleAttribute('data-active', +groups[g].dataset.stage === i);
+      var on = +groups[g].dataset.stage === i;
+      groups[g].toggleAttribute('data-active', on);
     }
     for (var j = 0; j < index.length; j++) {
       index[j].toggleAttribute('data-active', j === i);
     }
   }
 
-  CanTurntable.mount(document.getElementById('process'), {
+  CanTurntable.mount(document.getElementById('reveal'), {
     frames: 36,
-    preload: 1,
+    preload: 1,          // first paint waits on nothing but the poster
+
+    /* The can settles into a pose for each section and turns between them,
+       rather than spinning at a constant rate. One continuous 360 in a single
+       direction, with four rests. Packaging is the section that faces the
+       back panel. */
     stops: [
-      { at: 0.10, frame:   0,   hold: 0.05 },   /* formulation — front lockup */
-      { at: 0.30, frame:  -6.4, hold: 0.05 },   /* co-packing  — three-quarter */
-      { at: 0.50, frame: -12.7, hold: 0.05 },   /* canning     — side panel    */
-      { at: 0.70, frame: -23.3, hold: 0.05 },   /* packaging   — reverse panel */
-      { at: 0.90, frame: -36,   hold: 0.05 }    /* design      — back to front */
+      { at: 0.125, frame:   0,   hold: 0.06 },  // formulation — lockup, 0°
+      { at: 0.375, frame: -12.7, hold: 0.06 },  // production  — benefits, -127°
+      { at: 0.625, frame: -23.3, hold: 0.06 },  // packaging   — panel, -233°
+      { at: 0.875, frame: -36,   hold: 0.06 }   // finished    — lockup, -360°
     ],
     src: function (i, tier) {
       return 'seq/' + tier + '/can_' + String(i).padStart(2, '0') + '.webp';
@@ -419,6 +408,7 @@
       setStage(Math.min(STAGES - 1, Math.floor(p * STAGES * 0.999)));
     }
   });
+
   setStage(0);
 })();
 </script>

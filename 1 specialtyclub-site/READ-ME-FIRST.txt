@@ -1,0 +1,53 @@
+SPECIALTY CLUB — deploy assets
+==============================
+
+This bundle contains ONLY the files that need to ship. Nothing to configure,
+nothing to rename.
+
+WHAT TO DO
+----------
+
+1. Copy the `public` folder in this bundle into the root of the website repo,
+   merging with the existing `public` folder if there is one.
+
+   After copying, the repo must contain:
+
+       public/seq/1x/can_00.webp   ... can_35.webp     (36 files)
+       public/seq/2x/can_00.webp   ... can_35.webp     (36 files)
+       public/can-poster.webp
+       public/can-poster.png
+       public/sc-lockup-cream.svg
+       public/sc-lockup-full-cream-1600.png
+
+2. Put `can-turntable.js` wherever the site keeps its scripts.
+
+3. In the turntable init, make the paths ABSOLUTE — leading slash:
+
+       src: (i, tier) => `/seq/${tier}/can_${String(i).padStart(2, '0')}.webp`
+
+   and the poster `<img src="/can-poster.png">`.
+
+   Without the leading slash the path resolves against the current route, so
+   /process becomes /process/seq/... and 404s.
+
+4. Deploy, then open this URL directly in a browser:
+
+       https://specialtyclub.com/seq/1x/can_00.webp
+
+   It must show a black can. If it 404s, the files did not ship — check that
+   `public/seq` is committed and not excluded by .gitignore.
+
+NOTES
+-----
+
+- 72 frames, about 3.5 MB total. They load lazily after first paint, so they
+  do not affect page speed scores.
+- Do NOT run these through an image optimiser. Some pipelines strip alpha from
+  WebP, which puts a grey box behind the can. Mark `public/seq` pass-through.
+- Do NOT route the poster through next/image or similar. The turntable script
+  needs the plain <img> element it replaces.
+- The logo files here are the cream versions for the dark background. The
+  original black artwork is invisible on #100904.
+
+Full documentation, the demo page and the frame-generation pipeline are in
+specialtyclub-turntable.zip and specialtyclub-logo.zip.
