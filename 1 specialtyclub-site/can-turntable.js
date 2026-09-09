@@ -4,7 +4,7 @@
  *
  *   CanTurntable.mount(document.querySelector('.turntable'), {
  *     frames: 36,
- *     src: (i, tier) => `seq/${tier}/can_${String(i).padStart(2, '0')}.webp`
+ *     src: (i, tier) => `can_${tier}_${String(i).padStart(2, '0')}.webp`
  *   });
  *
  * Degradation, in order: no JS -> the <img> already in the markup stays put.
