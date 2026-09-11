@@ -697,9 +697,11 @@ footer .f-legal{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-
 
     <article class="stage" data-stage="2">
       <h2>The panel is part of the product.</h2>
-      <p>Nutrition, allergen and cannabinoid statements are set alongside the
-         artwork and reviewed before plates are cut. The 202 × 152 mm sleeve is
-         specified with the liquid, not after it.</p>
+      <p>Ingredient, nutrition, allergen, regulatory, and packaging
+         requirements are reviewed alongside your artwork before production.
+         We help ensure that the selected packaging format, labeling, and
+         product specifications align with your formulation and manufacturing
+         needs.</p>
     </article>
 
     <article class="stage" data-stage="3">
@@ -805,7 +807,7 @@ footer .f-legal{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-
   <p class="f-legal">&copy; 2026 Specialty Club Corp</p>
 </footer>
 
-<script src="can-turntable.js?v=21"></script>
+<script src="can-turntable.js?v=22"></script>
 <script>
 (function () {
   var STAGES = 4;
@@ -829,18 +831,12 @@ footer .f-legal{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-
     frames: 36,
     preload: 1,          // first paint waits on nothing but the poster
 
-    /* The can settles into a pose for each section and turns between them,
-       rather than spinning at a constant rate. One continuous 360 in a single
-       direction, with four rests. Packaging is the section that faces the
-       back panel. */
-    stops: [
-      { at: 0.125, frame:   0,   hold: 0.06 },  // formulation — lockup, 0°
-      { at: 0.375, frame: -12.7, hold: 0.06 },  // production  — benefits, -127°
-      { at: 0.625, frame: -23.3, hold: 0.06 },  // packaging   — panel, -233°
-      { at: 0.875, frame: -36,   hold: 0.06 }   // finished    — lockup, -360°
-    ],
+    /* Continuous slow rotation: one full 360 spread evenly across the
+       whole scroll of the section. */
+    spins: 1,
+    direction: -1,
     src: function (i, tier) {
-      return 'seq/' + tier + '/can_' + String(i).padStart(2, '0') + '.webp';
+      return 'can_' + tier + '_' + String(i).padStart(2, '0') + '.webp';
     },
     onScrub: function (p) {
       setStage(Math.min(STAGES - 1, Math.floor(p * STAGES * 0.999)));
